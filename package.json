@@ -4,7 +4,7 @@
   "description": "hey",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "nodemon src/index.js"
   },
   "repository": {
     "type": "git",
@@ -16,5 +16,20 @@
   "bugs": {
     "url": "https://github.com/cmack29/boolean-uk-final-group-project-server/issues"
   },
+<<<<<<< HEAD
+  "homepage": "https://github.com/cmack29/boolean-uk-final-group-project-server#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "morgan": "^1.10.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.14",
+    "prisma": "^3.4.1"
+  }
+}
+=======
   "homepage": "https://github.com/cmack29/boolean-uk-final-group-project-server#readme"
 }
+>>>>>>> 1dda6fc953b2fe4e1e7a4b9eb60d5472cf78fa62
