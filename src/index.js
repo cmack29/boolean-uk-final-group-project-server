@@ -6,7 +6,9 @@ const morgan = require("morgan")
 
 const app = express()
 
+
 /* SETUP MIDDLEWARE */
+const classesRouter = require("./resources/classes/router");
 
 app.disable("x-powered-by")
 
@@ -18,6 +20,7 @@ app.use(morgan("dev"))
 const memeberRouter = require("./resources/members/router")
 
 /* SETUP ROUTES */
+app.use("/classes", classesRouter);
 
 app.use("/members", memeberRouter);
 
