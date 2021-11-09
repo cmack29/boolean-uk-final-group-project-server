@@ -7,6 +7,7 @@ const morgan = require("morgan")
 const app = express()
 
 /* SETUP MIDDLEWARE */
+const classesRouter = require("./resources/classes/router");
 
 app.disable("x-powered-by")
 
@@ -16,6 +17,7 @@ app.use(express.urlencoded({ extended: true }))
 app.use(morgan("dev"))
 
 /* SETUP ROUTES */
+app.use("/classes", classesRouter);
 
 app.get("*", (req, res) => {
     res.json({ ok: true })
