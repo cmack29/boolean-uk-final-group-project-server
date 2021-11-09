@@ -8,9 +8,29 @@ generator client {
   provider = "prisma-client-js"
 }
 
-model member {
+model Member {
   id               Int    @id @default(autoincrement())
   userName         String
   membershipType   String
   membershipStatus String
+  classes          MembersOnClasses[]
+}
+
+model Class { 
+  id              Int    @id @default(autoincrement())
+  className       String
+  classType       String
+  classStatus     String
+  classStartDate  DateTime
+  duration        Int
+  members         MembersOnClasses[]
+}
+
+model MembersOnClasses {
+  memeber         Member @relation(fields: [memeberId], references: [id])
+  memeberId       Int
+  class           Class @relation(fields: [classId], references: [id])
+  classId         Int
+
+  @@id([memeberId, classId])
 }
