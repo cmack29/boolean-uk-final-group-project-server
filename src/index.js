@@ -15,7 +15,11 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use(morgan("dev"))
 
+const memeberRouter = require("./resources/members/router")
+
 /* SETUP ROUTES */
+
+app.use("/members", memeberRouter);
 
 app.get("*", (req, res) => {
     res.json({ ok: true })
