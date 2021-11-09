@@ -6,6 +6,7 @@ const morgan = require("morgan")
 
 const app = express()
 
+
 /* SETUP MIDDLEWARE */
 const classesRouter = require("./resources/classes/router");
 
