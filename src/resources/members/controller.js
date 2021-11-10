@@ -80,7 +80,7 @@ async function updateOneMember(req, res){
         })
 
         res.json(memeberNewDetails)
-
+        
     } catch(error) { 
 
         res.status(500).json({ error: error.message })
