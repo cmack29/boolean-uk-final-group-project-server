@@ -30,4 +30,51 @@ const createOne = async (req, res) => {
     }
 }
 
-module.exports = { getAll, createOne };
+const deleteOne = async (req, res) => {
+    const targetId = parseInt(req.params.id)
+    try {
+        const deleteOneClass = await prisma.class.delete({
+            where: {
+                id: targetId,
+            }
+        })
+        res.json({ message: "Delete successful" })
+    } catch (error) {
+        console.error({ error })
+    }
+}
+
+const updateOne = async (req, res) => {
+    try {
+        const updateOneClass = await prisma.class.update({
+            where: {
+                id: parseInt(req.params.id)
+            },
+            data: {
+                className: req.body.className,
+                classType: req.body.classType,
+                classStatus: req.body.classStatus,
+                classStartDate: new Date(req.body.classStartDate),
+                duration: parseInt(req.body.duration),
+                trainer: {
+                    create: {
+                        fullName: req.body.trainer.fullName,
+                        speciality: req.body.trainer.speciality,
+                        qualification: req.body.trainer.qualification,
+                        gender: req.body.trainer.gender,
+                    }
+                }
+            },
+            include: {
+                trainer: true,
+                members: true
+            }
+        })
+        res.json({ data: updateOneClass })
+    } catch (error) {
+        console.error(error)
+        res.json({ error })
+    }
+}
+
+module.exports = { getAll, createOne, deleteOne, updateOne };
