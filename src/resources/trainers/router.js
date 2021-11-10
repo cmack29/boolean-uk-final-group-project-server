@@ -1,8 +1,7 @@
 const express = require("express")
+const { getTrainers } = require("./controller")
 
 const router = express.Router();
-
-const { getTrainers } = require("./controller")
 
 router.get("/", getTrainers)
 

@@ -4,8 +4,11 @@ const express = require("express")
 const cors = require("cors")
 const morgan = require("morgan")
 
-const app = express()
+const classesRouter = require("./resources/classes/router");
+const memeberRouter = require("./resources/members/router")
+const trainerRouter = require("./resources/trainers/router")
 
+const app = express()
 
 /* SETUP MIDDLEWARE */
 
@@ -15,10 +18,6 @@ app.use(cors())
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use(morgan("dev"))
-
-const classesRouter = require("./resources/classes/router");
-const memeberRouter = require("./resources/members/router")
-const trainerRouter = require("./resources/trainers/router")
 
 /* SETUP ROUTES */
 app.use("/classes", classesRouter);
