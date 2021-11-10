@@ -13,6 +13,7 @@ model Member {
   userName         String
   membershipType   String
   membershipStatus String
+  profile          Profile?
   classes          MembersOnClasses[]
 }
 
@@ -44,4 +45,25 @@ model Trainer {
   qualification String
   gender        String
   classes       Class[]
+}
+
+model Profile {
+  id        Int      @id @default(autoincrement())
+  picture   String   @db.VarChar(255)
+  firstName String   @db.VarChar(255)
+  lastname  String   @db.VarChar(255) 
+  member    Member   @relation(fields: [memberId], references: [id])
+  memberId  Int
+  address   Address?
+}
+
+model Address { 
+id          Int     @id @default(autoincrement())
+houseNumber	Int
+streetName	String  @db.VarChar(255)
+city	      String  @db.VarChar(255)
+postcode	  String  @db.VarChar(8)
+country	    String  @db.VarChar(255)
+profile     Profile @relation(fields: [profileId	], references: [id])
+profileId	  Int
 }
