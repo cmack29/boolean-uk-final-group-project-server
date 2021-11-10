@@ -33,7 +33,7 @@ async function addNewMember(req, res){
             }
         })
 
-        res.json({ theNewMemeber: newMember})
+        res.json(newMember)
 
     } catch(error) {
 
@@ -79,7 +79,7 @@ async function updateOneMember(req, res){
             }
         })
 
-        res.json({ resp: memeberNewDetails})
+        res.json(memeberNewDetails)
 
     } catch(error) { 
 
