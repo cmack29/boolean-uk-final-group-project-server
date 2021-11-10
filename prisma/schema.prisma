@@ -1,6 +1,6 @@
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider          = "postgresql"
+  url               = env("DATABASE_URL")
   shadowDatabaseUrl = env("SHADOW_DATABASE_URL")
 }
 
@@ -9,28 +9,39 @@ generator client {
 }
 
 model Member {
-  id               Int    @id @default(autoincrement())
+  id               Int                @id @default(autoincrement())
   userName         String
   membershipType   String
   membershipStatus String
   classes          MembersOnClasses[]
 }
 
-model Class { 
-  id              Int    @id @default(autoincrement())
-  className       String
-  classType       String
-  classStatus     String
-  classStartDate  DateTime
-  duration        Int
-  members         MembersOnClasses[]
+model Class {
+  id             Int                @id @default(autoincrement())
+  className      String
+  classType      String
+  classStatus    String
+  classStartDate DateTime
+  duration       Int
+  trainerId      Int?
+  trainer        Trainer?           @relation(fields: [trainerId], references: [id])
+  members        MembersOnClasses[]
 }
 
 model MembersOnClasses {
-  memeber         Member @relation(fields: [memeberId], references: [id])
-  memeberId       Int
-  class           Class @relation(fields: [classId], references: [id])
-  classId         Int
+  memeber   Member @relation(fields: [memeberId], references: [id])
+  memeberId Int
+  class     Class  @relation(fields: [classId], references: [id])
+  classId   Int
 
   @@id([memeberId, classId])
+}
+
+model Trainer {
+  id            Int     @id @default(autoincrement())
+  fullName      String
+  speciality    String
+  qualification String
+  gender        String
+  classes       Class[]
 }
