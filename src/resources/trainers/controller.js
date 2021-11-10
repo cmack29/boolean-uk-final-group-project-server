@@ -6,7 +6,7 @@ async function getTrainers(req, res) {
 
         const allTrainers = await prisma.trainer.findMany({})
 
-        res.json(allTrainers)
+        res.json({data: allTrainers})
 
     } catch(error) {
 
