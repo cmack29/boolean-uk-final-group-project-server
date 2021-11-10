@@ -4,11 +4,13 @@ const express = require("express")
 const cors = require("cors")
 const morgan = require("morgan")
 
+const classesRouter = require("./resources/classes/router");
+const memeberRouter = require("./resources/members/router")
+const trainerRouter = require("./resources/trainers/router")
+
 const app = express()
 
-
 /* SETUP MIDDLEWARE */
-const classesRouter = require("./resources/classes/router");
 
 app.disable("x-powered-by")
 
@@ -17,12 +19,10 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use(morgan("dev"))
 
-const memeberRouter = require("./resources/members/router")
-
 /* SETUP ROUTES */
 app.use("/classes", classesRouter);
-
 app.use("/members", memeberRouter);
+app.use("/trainers", trainerRouter);
 
 app.get("*", (req, res) => {
     res.json({ ok: true })
