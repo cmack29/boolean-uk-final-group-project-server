@@ -7,6 +7,8 @@ const morgan = require("morgan")
 const classesRouter = require("./resources/classes/router");
 const memeberRouter = require("./resources/members/router")
 const trainerRouter = require("./resources/trainers/router")
+const addressRouter = require("./resources/addresses/router")
+const profileRouter = require("./resources/profiles/router")
 
 const app = express()
 
@@ -23,6 +25,8 @@ app.use(morgan("dev"))
 app.use("/classes", classesRouter);
 app.use("/members", memeberRouter);
 app.use("/trainers", trainerRouter);
+app.use("/address", addressRouter);
+app.use("/profile", profileRouter);
 
 app.get("*", (req, res) => {
     res.json({ ok: true })
