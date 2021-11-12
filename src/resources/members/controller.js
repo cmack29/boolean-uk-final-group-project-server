@@ -54,7 +54,7 @@ async function addNewMemberWithProfile(req, res){
 
     const { userName, membershipType, membershipStatus, profile } = member;
 
-    const { picture, firstName, lastName, address } = profile;
+    const { picture, firstName, lastname, address } = profile;
 
     const { houseNumber, streetName, city, postcode, country } = address
 
@@ -68,26 +68,22 @@ async function addNewMemberWithProfile(req, res){
                 membershipType,
                 membershipStatus,
                 profile: { 
-                    create : [
+                    create : 
                         {
                             picture,
                             firstName,
-                            lastName,
-                            // memberId: 
+                            lastname,
                             address : {
-                                create : [
+                                create :
                                     {
                                         houseNumber,
                                         streetName,
                                         city,
                                         postcode,
                                         country
-                                        // profileId
                                     }
-                                ]
                             }
                         }
-                    ]
                 }
             },
             select : { 
@@ -102,7 +98,7 @@ async function addNewMemberWithProfile(req, res){
         res.json(newMember)
 
     } catch(error) {
-
+        console.error(error)
         res.status(500).json({ error : error.message })
     }
 }

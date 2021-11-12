@@ -14,7 +14,7 @@ const getAll = async (req, res) => {
 
 const createOne = async (req, res) => {
 
-    console.log("body date: ", req.body.classStartDate , "\n body: ", req.body)
+    console.log("body: ", req.body)
     try {
         const createOneClass = await prisma.class.create({
             data: {
@@ -25,7 +25,7 @@ const createOne = async (req, res) => {
                 duration: parseInt(req.body.duration)
             }
         })
-        res.json({ data: createOneClass })
+        res.json(createOneClass)
     } catch (error) {
         console.error({ error })
         res.json({ error })
