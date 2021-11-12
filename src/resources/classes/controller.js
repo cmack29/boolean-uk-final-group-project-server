@@ -5,7 +5,7 @@ const getAll = async (req, res) => {
         const getAllClasses = await prisma.class.findMany({
         });
 
-        res.json({ data: getAllClasses });
+        res.json(getAllClasses);
     } catch (error) {
         console.error({ error })
         res.json({ error })
@@ -13,13 +13,15 @@ const getAll = async (req, res) => {
 }
 
 const createOne = async (req, res) => {
+
+    console.log("body date: ", req.body.classStartDate , "\n body: ", req.body)
     try {
         const createOneClass = await prisma.class.create({
             data: {
                 className: req.body.className,
                 classType: req.body.classType,
                 classStatus: req.body.classStatus,
-                classStartDate: new Date(req.body.classStartDate),
+                classStartDate: new Date(req.body.classStartDate).toISOString(),
                 duration: parseInt(req.body.duration)
             }
         })

@@ -10,7 +10,7 @@ async function getTrainers(req, res) {
             }
         })
 
-        res.json({data: allTrainers})
+        res.json(allTrainers)
 
     } catch(error) {
 
