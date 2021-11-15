@@ -24,15 +24,6 @@ const getAll = async (req, res) => {
           picture,
           firstName,
           lastname,
-          // address: {
-          //   include: {
-          //     houseNumber,
-          //     streetName,
-          //     city,
-          //     postcode,
-          //     country,
-          //   }
-          // }
         },
       });
       res.json([
