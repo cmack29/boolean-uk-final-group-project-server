@@ -52,8 +52,8 @@ model Profile {
   picture   String   @db.VarChar(255)
   firstName String   @db.VarChar(255)
   lastname  String   @db.VarChar(255) 
-  member    Member   @relation(fields: [memberId], references: [id])
-  memberId  Int
+  member    Member?   @relation(fields: [memberId], references: [id])
+  memberId  Int?
   address   Address?
 }
 
@@ -64,6 +64,6 @@ streetName	String  @db.VarChar(255)
 city	      String  @db.VarChar(255)
 postcode	  String  @db.VarChar(8)
 country	    String  @db.VarChar(255)
-profile     Profile @relation(fields: [profileId	], references: [id])
-profileId	  Int
+profile     Profile? @relation(fields: [profileId	], references: [id])
+profileId	  Int?
 }

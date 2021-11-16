@@ -4,7 +4,6 @@ const router = express.Router();
 
 const {
     getAllMembers,
-    addNewMember,
     removeOneMemeber,
     updateOneMember,
     getOneMmber,
@@ -14,8 +13,6 @@ const {
 router.get("/:id", getOneMmber);
 
 router.get("/", getAllMembers);
-
-router.post("/", addNewMember);
 
 router.post("/add", addNewMemberWithProfile)
 
