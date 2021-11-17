@@ -1,95 +1,76 @@
-const { LOADIPHLPAPI } = require("dns")
-const { member } = require("../../utils/database")
+const {LOADIPHLPAPI} = require("dns")
+// const {member} = require("../../utils/database")
 const prisma = require("../../utils/database")
 
-async function getAllMembers( req, res){ 
+async function getAllMembers(req, res) {
     console.log("res: ", res)
 
- try {
-    
-    const allMembers = await prisma.member.findMany({ 
-        include : { 
-            classes: true,
-            profile: {
-                include : {
-                    address: true
+    try {
+
+        const allMembers = await prisma.member.findMany({
+            include: {
+                classes: true,
+                profile: {
+                    include: {
+                        address: true
+                    }
                 }
             }
-        }
-    })
-    res.json(allMembers)
-
- } catch(error) {
-
-    res.status(500).json({error : error.message})
-
- }
-}
-
-async function addNewMember(req, res){ 
-
-    const memeber = req.body
-    console.log("memeber: ", memeber)
-
-    try { 
-
-        const newMember = await prisma.member.create({
-            data : { 
-                ...memeber
-            }
         })
+        res.json(allMembers)
 
-        res.json(newMember)
+    } catch (error) {
 
-    } catch(error) {
+        res.status(500).json({error: error.message})
 
-        res.status(500).json({ error : error.message })
     }
 }
 
-async function addNewMemberWithProfile(req, res){ 
+async function addNewMemberWithProfile(req, res) {
 
     const member = req.body;
     console.log("member: ", member)
 
-    const { userName, membershipType, membershipStatus, profile } = member;
+    const {userName, membershipType, membershipStatus, profile} = member;
 
-    const { picture, firstName, lastname, address } = profile;
+    const {picture, firstName, lastname, address} = profile;
 
-    const { houseNumber, streetName, city, postcode, country } = address
+    const {
+        houseNumber,
+        streetName,
+        city,
+        postcode,
+        country
+    } = address
 
-    console.log("memeber: ", member)
-
-    try { 
+    try {
 
         const newMember = await prisma.member.create({
-            data : { 
+            data: {
                 userName,
                 membershipType,
                 membershipStatus,
-                profile: { 
-                    create : 
-                        {
-                            picture,
-                            firstName,
-                            lastname,
-                            address : {
-                                create :
-                                    {
-                                        houseNumber,
-                                        streetName,
-                                        city,
-                                        postcode,
-                                        country
-                                    }
+                profile: {
+                    create: {
+                        picture,
+                        firstName,
+                        lastname,
+                        address: {
+                            create: {
+                                houseNumber: parseInt(houseNumber),
+                                streetName,
+                                city,
+                                postcode,
+                                country
                             }
                         }
+                    }
                 }
             },
-            select : { 
-                profile : { 
-                    select: { 
-                        address : true
+            include: {
+                profile: {
+                    include: {
+                        address: true
                     }
                 }
             }
@@ -97,75 +78,79 @@ async function addNewMemberWithProfile(req, res){
 
         res.json(newMember)
 
-    } catch(error) {
+    } catch (error) {
         console.error(error)
-        res.status(500).json({ error : error.message })
+        res.status(500).json({error: error.message})
     }
 }
 
-async function removeOneMemeber(req, res){ 
+async function removeOneMemeber(req, res) {
 
     const id = req.params.id;
-    console.log("id: ", id)
+    console.log("removeOneMemeber id: ", id)
 
-    try { 
+    console.log("removeOneMemeber body: ", req.body)
+    
+    try {
 
         const memeberToDelete = await prisma.member.delete({
-            where : {
-                id : parseInt(id)
+            where: {
+                id: parseInt(id)
             }
         })
 
-        res.json({ deleted : true })
+        // to change to delete chain query if figuring out the discrepancy between the id's
+        // const transaction = await prisma.$transaction([memeberToDelete, deleteProfile, deleteAddress])
+        res.json({deleted: true})
 
-    } catch(error) {
+    } catch (error) {
 
-        res.status(500).json({ error : error.message})
+        res.status(500).json({error: error.message})
     }
 }
 
-async function updateOneMember(req, res){ 
+async function updateOneMember(req, res) {
 
     const id = req.params.id;
     const updatedData = req.body;
     console.log("id: ", id, "\nupdatedData: ", updatedData)
 
-    try { 
+    try {
 
-        const memeberNewDetails = await prisma.member.update({ 
-            where : {
-                id : parseInt(id)
-            }, 
-            data : { 
-                ...updatedData
+        const memeberNewDetails = await prisma.member.update({
+            where: {
+                id: parseInt(id)
+            },
+            data: {
+                ... updatedData
             }
         })
 
         res.json(memeberNewDetails)
-        
-    } catch(error) { 
 
-        res.status(500).json({ error: error.message })
+    } catch (error) {
+
+        res.status(500).json({error: error.message})
 
     }
 
 }
 
-async function getOneMmber(req, res){ 
+async function getOneMmber(req, res) {
 
     const id = req.params.id;
     console.log("id: ", id);
 
-    try { 
-        const memeberById = await prisma.member.findUnique({ 
-            where : { 
+    try {
+        const memeberById = await prisma.member.findUnique({
+            where: {
                 id: parseInt(id)
             },
-            include : { 
-                classes : true,
-                profile : { 
-                    include : {
-                        address : true
+            include: {
+                classes: true,
+                profile: {
+                    include: {
+                        address: true
                     }
                 }
             }
@@ -173,15 +158,14 @@ async function getOneMmber(req, res){
 
         res.json(memeberById)
 
-    } catch(error) {
-        res.status(500).json({ error : error.message })
+    } catch (error) {
+        res.status(500).json({error: error.message})
     }
 
 }
 
-module.exports = { 
+module.exports = {
     getAllMembers,
-    addNewMember,
     getOneMmber,
     removeOneMemeber,
     updateOneMember,
