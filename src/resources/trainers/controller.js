@@ -58,9 +58,23 @@ async function createTrainer(req, res) {
         res.status(500).json({ error : error.message })
     }
 }
+const deleteOneTrainer = async (req, res) => {
+    const targetId = parseInt(req.params.id)
+    try {
+        const deleteOneTrainer = await prisma.trainer.delete({
+            where: {
+                id: targetId,
+            }
+        })
+        res.json({ message: "Delete successful" })
+    } catch (error) {
+        console.error({ error })
+    }
+}
 
 module.exports = {
     getTrainers,
     getOneTrainer,
-    createTrainer
+    createTrainer,
+    deleteOneTrainer
 }
